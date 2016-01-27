@@ -1,0 +1,10 @@
+#!/bin/bash
+set -e
+
+./waf \
+	--build_type=debug \
+	configure
+	
+./waf -p build
+./waf testbed
+./waf clean
