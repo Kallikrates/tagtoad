@@ -58,14 +58,6 @@ tagtoad_tank_t * tagtoad_node_tank_add(tagtoad_node_t * n, char const * name, ta
 	return vector_back(&n->tanks);
 }
 
-tagtoad_tank_t * tagtoad_node_tank_add_vector(tagtoad_node_t * n, char const * name, tagtoad_tagtype_t type) {
-	if (tagtoad_node_tank_find(n, name)) return NULL;
-	tagtoad_tank_t nt;
-	tagtoad_tank_create_vector(&nt, name, type);
-	vector_push_back(&n->tanks, &nt);
-	return vector_back(&n->tanks);
-}
-
 tagtoad_tank_t * tagtoad_node_tank_find(tagtoad_node_t * n, char const * name) {
 	tagtoad_tank_t * t = n->tanks.data;
 	for (size_t i = 0; i<n->tanks.count; i++, t+=1) {

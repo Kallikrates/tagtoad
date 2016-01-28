@@ -19,11 +19,6 @@ int main() {
 	n = tagtoad_root_node_add(&r, "test19.jpg");
 	t = tagtoad_node_tank_add(n, "testint01", TAGTYPE_UINT8);
 	TT_U8(t) = 180;
-	t = tagtoad_node_tank_add_vector(n, "testvec01", TAGTYPE_UINT16);
-	uint16_t vp = 3456;
-	vector_push_back(TT_VEC(t), &vp);
-	vp = 7890;
-	vector_push_back(TT_VEC(t), &vp);
 	t = tagtoad_node_tank_add(n, "testint02", TAGTYPE_INT64);
 	TT_I64(t) = 454545454545454;
 

@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define tterr(x) fprintf(stderr, "%s: %s\n", __func__, x);
+
 //============================ VECTOR ============================
 
 #define GENFUNP(X) ((void(*)(void *))X)
@@ -53,25 +55,34 @@ typedef enum tagtoad_tagtype_e {
 #define TT_U16(tt) *((uint16_t *) tt->data)
 #define TT_U32(tt) *((uint32_t *) tt->data)
 #define TT_U64(tt) *((uint64_t *) tt->data)
+#define TT_VEC(tt) &((tagtoad_tagtype_vector_t *) tt->data)->vec
 
-#define TT_VEC(tt) ((vector_t *) tt->data)
+typedef struct tagtoad_tagtype_vector_s {
+	vector_t vec;
+	tagtoad_tagtype_t type;
+} tagtoad_tagtype_vector_t;
+
+//================================
 
 typedef struct tagtoad_tagtypeinfo_s {
 	size_t size;
 	char const * name;
+	void (*destructor) (void *);
 } tagtoad_tagtypeinfo_t;
 
 tagtoad_tagtypeinfo_t const * tagtoad_tagtype_info(tagtoad_tagtype_t);
+
+//================================
 
 typedef struct tagtoad_tank_s {
 	char * name;
 	tagtoad_tagtype_t type;
 	void * data;
-	tagtoad_tagtype_t vtype; //for vectors
 } tagtoad_tank_t;
 
-void tagtoad_tank_create(tagtoad_tank_t *, char const *, tagtoad_tagtype_t);
-void tagtoad_tank_create_vector(tagtoad_tank_t *, char const *, tagtoad_tagtype_t);
+bool tagtoad_tank_create(tagtoad_tank_t *, char const *, tagtoad_tagtype_t);
+bool tagtoad_tank_vector_init(tagtoad_tank_t *, tagtoad_tagtype_t);
+
 void tagtoad_tank_destroy(tagtoad_tank_t *);
 void tagtoad_tank_write(tagtoad_tank_t *, FILE *);
 void tagtoad_tank_read(tagtoad_tank_t *, FILE *);
@@ -90,7 +101,6 @@ void tagtoad_node_destroy(tagtoad_node_t *);
 void tagtoad_node_write(tagtoad_node_t *, FILE *);
 void tagtoad_node_read(tagtoad_node_t *, FILE *);
 tagtoad_tank_t * tagtoad_node_tank_add(tagtoad_node_t *, char const * name, tagtoad_tagtype_t);
-tagtoad_tank_t * tagtoad_node_tank_add_vector(tagtoad_node_t *, char const * name, tagtoad_tagtype_t);
 tagtoad_tank_t * tagtoad_node_tank_find(tagtoad_node_t *, char const * name);
 
 //================================================================

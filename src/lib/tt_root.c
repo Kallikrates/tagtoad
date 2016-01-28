@@ -130,41 +130,7 @@ void tagtoad_root_debug_print(tagtoad_root_t * r) {
 				printf("%lu", TT_U64(tank));
 				break;
 			case TAGTYPE_VECTOR:
-				printf("(%s)[%u]-> ", tagtoad_tagtype_info(tank->vtype)->name, TT_VEC(tank)->count);
-				printf("{");
-				void * data = TT_VEC(tank)->data;
-				for(uint32_t i = 0; i < TT_VEC(tank)->count; i++, data += TT_VEC(tank)->unit) {
-					if (i) printf(", ");
-					switch(tank->vtype) {
-					case TAGTYPE_INT8:
-						printf("%hhi", *(int8_t *)data);
-						break;
-					case TAGTYPE_INT16:
-						printf("%hi", *(int16_t *)data);
-						break;
-					case TAGTYPE_INT32:
-						printf("%i", *(int32_t *)data);
-						break;
-					case TAGTYPE_INT64:
-						printf("%li", *(int64_t *)data);
-						break;
-					case TAGTYPE_UINT8:
-						printf("%hhu", *(uint8_t *)data);
-						break;
-					case TAGTYPE_UINT16:
-						printf("%hu", *(uint16_t *)data);
-						break;
-					case TAGTYPE_UINT32:
-						printf("%u", *(uint32_t *)data);
-						break;
-					case TAGTYPE_UINT64:
-						printf("%lu", *(uint64_t *)data);
-						break;
-					default:
-						printf("behind you!");
-					}
-				}
-				printf("}");
+				printf("VECTOR PRINT NOT IMPLEMENTED");
 				break;
 			}
 			printf("\n");
